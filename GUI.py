@@ -162,7 +162,6 @@ class GUI:
                 GUI.x_list[GUI.currentLine].append(x)
                 GUI.y_list[GUI.currentLine].append(y)
                 for a in range(len(GUI.axes)):
-                    # GUI.lines2d[a] = [GUI.axes[a].plot(GUI.x_list[i], GUI.y_list[i], 'o', color=GUI.colors[i]) for i in range(len(GUI.colors)) ]
                     GUI.lines2d[a][GUI.currentLine][0].set_data(GUI.x_list[GUI.currentLine], GUI.y_list[GUI.currentLine])
                 if GUI.loss == "MCE":
                     GUI.showClassPredictions(np.array([[x,y]], dtype=float))
