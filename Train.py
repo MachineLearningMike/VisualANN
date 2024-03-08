@@ -12,7 +12,7 @@ from GUI import GUI
 #----------------------- define task --------------------------------------
 # loss, dim, pred_dim = Losses.MeanSquaredError(), 6, 1
 # loss, dim, pred_dim = Losses.BinaryCrossEntropy(), 6, 1
-loss, dim, pred_dim = Losses.MultiCrossEntropy(), 30, 15
+loss, dim, pred_dim = Losses.MultiCrossEntropy(), 6, 5# 30, 15
 
 assert loss.name != 'MSE' or pred_dim == 1
 assert loss.name != 'BCE' or pred_dim == 1
