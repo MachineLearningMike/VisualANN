@@ -172,9 +172,6 @@ class GUI:
         GUI.x_list = [[] for c in GUI.colors]
         GUI.y_list = [[] for c in GUI.colors]
         GUI.refreshMainAxes(None)
-        # for a in range(len(GUI.axes)):
-        #     for line in range(len(GUI.colors)):
-        #         GUI.lines2d[a][line][0].set_data(GUI.x_list[line], GUI.y_list[line])
         GUI.fig.canvas.draw()
         return
 
@@ -200,9 +197,8 @@ class GUI:
             
             CS0 = ax.contourf(GUI.X, GUI.Y, outputs[last_layer][:,:,a], nContours, cmap=plt.cm.bone, origin=origin)
             CS = ax.contour(GUI.X, GUI.Y, outputs[last_layer][:,:,a], CS0.levels, colors=('k'), origin=origin, linewidths=.2)
-            # ax.contour(GUI.X, GUI.Y, outputs[last_layer][:,:,a], sLevels, colors=sColors, origin=origin, linewidths=.5)    
-            # plt.clabel(CS, fmt='%1.1f', colors='c', fontsize=8, inline=True)
-            # ax.plot_surface(GUI.X, GUI.Y, outputs[last_layer][:,:,a], cmap=plt.cm.YlGnBu_r)
+            ax.contour(GUI.X, GUI.Y, outputs[last_layer][:,:,a], sLevels, colors=sColors, origin=origin, linewidths=.5)    
+            plt.clabel(CS, fmt='%1.1f', colors='c', fontsize=8, inline=True)
             ax.plot([-GUI.lim, GUI.lim], [0, 0], '-', color='b', lw=0.2)
             ax.plot([0, 0], [-GUI.lim, GUI.lim], '-', color='b', lw=0.2)
             # if weights is not None:
