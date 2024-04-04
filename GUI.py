@@ -70,7 +70,7 @@ class GUI:
 
     def init(model, loss, pred_dim) -> None:
         GUI.model, GUI.loss, GUI.pred_dim = model, loss, pred_dim
-        nColors = pred_dim if loss == "MCE" else (2 if loss == 'BCE' else 6)
+        nColors = pred_dim if loss == 'categorical_crossentropy' else (2 if loss == 'binary_crossentropy' else 6)
         assert nColors > 0 and nColors < len(GUI.colors)
         GUI.colors = GUI.colors[:nColors]
         GUI.x_list = [[] for _ in GUI.colors]
@@ -81,7 +81,7 @@ class GUI:
         GUI.currentClass = GUI.classNames[GUI.currentLine]
 
         # GUI.xy = np.array([[(x, y) for x in GUI.x] for y in GUI.y], dtype=float)
-        GUI.nAxes = pred_dim + 1 if GUI.loss == "MCE" else pred_dim
+        GUI.nAxes = pred_dim + 1 if GUI.loss == 'categorical_crossentropy' else pred_dim
         assert GUI.nAxes > 0
         nRows, nCols = GUI.getRowsCols(GUI.nAxes)
 
@@ -163,7 +163,7 @@ class GUI:
                 GUI.y_list[GUI.currentLine].append(y)
                 for a in range(len(GUI.axes)):
                     GUI.lines2d[a][GUI.currentLine][0].set_data(GUI.x_list[GUI.currentLine], GUI.y_list[GUI.currentLine])
-                if GUI.loss == "MCE":
+                if GUI.loss == 'categorical_crossentropy':
                     GUI.showClassPredictions(np.array([[x,y]], dtype=float))
                 GUI.showTitle(GUI.compileTitle(), "Point added.")
                 GUI.fig.canvas.draw()
@@ -177,7 +177,7 @@ class GUI:
 
     #=========== External calls
 
-    def refreshMainAxes(X, nContours=10, weights=None):
+    def refreshMainAxes(X, nContours=10):
         # clear all axes.
         for ax in GUI.axes: ax.cla()
         # get model outputs, which are predictions.
@@ -186,7 +186,7 @@ class GUI:
 
         last_layer = len(outputs) - 1
         origin = 'lower'
-        sLevels = (0, 1, 2, 3, 4, 5) if GUI.loss == 'MSE' else (0,)
+        sLevels = (0, 1, 2, 3, 4, 5) if GUI.loss == 'mean_squared_error' else (0,)
         sColors = GUI.colors[: len(sLevels)]
 
         # Refresh prediction axes.
@@ -204,8 +204,8 @@ class GUI:
             # if weights is not None:
             #     ax.plot([0, weights[0][last_layer][0] ], [0, weights[0][last_layer][1]], color='y')
 
-        # Refresh partition ax if "MCE"
-        if GUI.loss == "MCE":
+        # Refresh partition ax if 'categorical_crossentropy'
+        if GUI.loss == 'categorical_crossentropy':
             ax = GUI.axes[-1]
             ax.set_xlim(-GUI.lim, GUI.lim)
             ax.set_ylim(-GUI.lim, GUI.lim)
@@ -225,7 +225,7 @@ class GUI:
             for i in range(len(GUI.colors)) ]
 
         # put class prediction labels on data points
-        if GUI.loss == "MCE" and X is not None:
+        if GUI.loss == 'categorical_crossentropy' and X is not None:
             GUI.showClassPredictions(X)
 
         GUI.fig.canvas.draw()

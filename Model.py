@@ -71,7 +71,7 @@ class Sequential:
         # self.metrics = metrics
         return
 
-    def Fit(self, X, Y, batchsize, epochs, wHistory=False):
+    def fit(self, X, Y, batchsize=64, epochs=10, wHistory=False):
         for epoch in range(epochs):
             X, Y = permute(X, Y)
             for bStart in range(0, Y.shape[0], batchsize):
